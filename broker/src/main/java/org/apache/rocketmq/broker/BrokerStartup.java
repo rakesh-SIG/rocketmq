@@ -278,4 +278,20 @@ public class BrokerStartup {
 
         return options;
     }
+    
+        private static Options buildCommandlineOptions64(final Options options) {
+        Option opt = new Option("c", "configFile", true, "Broker config properties file");
+        opt.setRequired(false);
+        options.addOption(opt);
+
+        opt = new Option("p", "printConfigItem", false, "Print all config item");
+        opt.setRequired(false);
+        options.addOption(opt);
+
+        opt = new Option("m", "printImportantConfig", false, "Print important config item");
+        opt.setRequired(false);
+        options.addOption(opt);
+
+        return options;
+    }
 }
