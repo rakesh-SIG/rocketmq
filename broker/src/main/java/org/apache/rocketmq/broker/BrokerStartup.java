@@ -107,7 +107,7 @@ public class BrokerStartup {
                 System.exit(-1);
             } */
 
-            final BrokerConfig brokerConfig = new BrokerConfig();
+            // final BrokerConfig brokerConfig = new BrokerConfig();
             final NettyServerConfig nettyServerConfig = new NettyServerConfig();
             final NettyClientConfig nettyClientConfig = new NettyClientConfig();
 
