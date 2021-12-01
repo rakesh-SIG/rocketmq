@@ -100,12 +100,12 @@ public class BrokerStartup {
 
         try {
             //PackageConflictDetect.detectFastjson();
-            Options options = ServerUtil.buildCommandlineOptions(new Options());
+           /* Options options = ServerUtil.buildCommandlineOptions(new Options());
             commandLine = ServerUtil.parseCmdLine("mqbroker", args, buildCommandlineOptions(options),
                 new PosixParser());
             if (null == commandLine) {
                 System.exit(-1);
-            }
+            } */
 
             final BrokerConfig brokerConfig = new BrokerConfig();
             final NettyServerConfig nettyServerConfig = new NettyServerConfig();
