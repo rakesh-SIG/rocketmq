@@ -317,4 +317,27 @@ public class BrokerStartup {
 
         return null;
     }
+    
+        public static BrokerController anotherFunc(BrokerController controller) {
+        try {
+
+            controller.start();
+
+            String tip = "The broker[" + controller.getBrokerConfig().getBrokerName() + ", "
+                + controller.getBrokerAddr() + "] boot success. serializeType=" + RemotingCommand.getSerializeTypeConfigInThisServer();
+
+            if (null != controller.getBrokerConfig().getNamesrvAddr()) {
+                tip += " and name server is " + controller.getBrokerConfig().getNamesrvAddr();
+            }
+
+            log.info(tip);
+            System.out.printf("%s%n", tip);
+            return controller;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+        return null;
+    }
 }

@@ -1,7 +1,9 @@
 name: sigrid-publish
 on:
   push:
-    branches: [$default-branch]
+    branches: 
+      - "main"
+      - "master"
 jobs:
   sigridci:
     runs-on: ubuntu-latest
