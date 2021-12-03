@@ -1352,5 +1352,129 @@ public class SelectorParser implements SelectorParserConstants {
         int arg;
         JJCalls next;
     }
+    
+    final public Expression duplicatedMethod() throws ParseException {
+        Expression left;
+        Expression right;
+        Expression low;
+        Expression high;
+        String t, u;
+        boolean not;
+        ArrayList list;
+        left = unaryExpr();
+        label_4:
+        while (true) {
+            switch ((jjNtk == -1) ? jj_ntk() : jjNtk) {
+                case NOT:
+                case BETWEEN:
+                case IN:
+                case 24:
+                case 25:
+                case 26:
+                case 27:
+                    break;
+                default:
+                    jjLa1[5] = jjGen;
+                    break label_4;
+            }
+            switch ((jjNtk == -1) ? jj_ntk() : jjNtk) {
+                case 24:
+                    jj_consume_token(24);
+                    right = unaryExpr();
+                    left = ComparisonExpression.createGreaterThan(left, right);
+                    break;
+                case 25:
+                    jj_consume_token(25);
+                    right = unaryExpr();
+                    left = ComparisonExpression.createGreaterThanEqual(left, right);
+                    break;
+                case 26:
+                    jj_consume_token(26);
+                    right = unaryExpr();
+                    left = ComparisonExpression.createLessThan(left, right);
+                    break;
+                case 27:
+                    jj_consume_token(27);
+                    right = unaryExpr();
+                    left = ComparisonExpression.createLessThanEqual(left, right);
+                    break;
+                case BETWEEN:
+                    jj_consume_token(BETWEEN);
+                    low = unaryExpr();
+                    jj_consume_token(AND);
+                    high = unaryExpr();
+                    left = ComparisonExpression.createBetween(left, low, high);
+                    break;
+                default:
+                    jjLa1[8] = jjGen;
+                    if (jj_2_2(2)) {
+                        jj_consume_token(NOT);
+                        jj_consume_token(BETWEEN);
+                        low = unaryExpr();
+                        jj_consume_token(AND);
+                        high = unaryExpr();
+                        left = ComparisonExpression.createNotBetween(left, low, high);
+                    } else {
+                        switch ((jjNtk == -1) ? jj_ntk() : jjNtk) {
+                            case IN:
+                                jj_consume_token(IN);
+                                jj_consume_token(28);
+                                t = stringLitteral();
+                                list = new ArrayList();
+                                list.add(t);
+                                label_5:
+                                while (true) {
+                                    switch ((jjNtk == -1) ? jj_ntk() : jjNtk) {
+                                        case 29:
+                                            break;
+                                        default:
+                                            jjLa1[6] = jjGen;
+                                            break label_5;
+                                    }
+                                    jj_consume_token(29);
+                                    t = stringLitteral();
+                                    list.add(t);
+                                }
+                                jj_consume_token(30);
+                                left = ComparisonExpression.createInFilter(left, list);
+                                break;
+                            default:
+                                jjLa1[9] = jjGen;
+                                if (jj_2_3(2)) {
+                                    jj_consume_token(NOT);
+                                    jj_consume_token(IN);
+                                    jj_consume_token(28);
+                                    t = stringLitteral();
+                                    list = new ArrayList();
+                                    list.add(t);
+                                    label_6:
+                                    while (true) {
+                                        switch ((jjNtk == -1) ? jj_ntk() : jjNtk) {
+                                            case 29:
+                                                break;
+                                            default:
+                                                jjLa1[7] = jjGen;
+                                                break label_6;
+                                        }
+                                        jj_consume_token(29);
+                                        t = stringLitteral();
+                                        list.add(t);
+                                    }
+                                    jj_consume_token(30);
+                                    left = ComparisonExpression.createNotInFilter(left, list);
+                                } else {
+                                    jj_consume_token(-1);
+                                    throw new ParseException();
+                                }
+                        }
+                    }
+            }
+        }
+        {
+            if (true)
+                return left;
+        }
+        throw new Error("Missing return statement in function");
+    }
 
 }
