@@ -251,6 +251,37 @@ public class BrokerStartup {
         }
 
         return null;
+        
+                    String namesrvAddr = brokerConfig.getNamesrvAddr();
+            if (null != namesrvAddr) {
+                try {
+                    String[] addrArray = namesrvAddr.split(";");
+                    for (String addr : addrArray) {
+                        RemotingUtil.string2SocketAddress(addr);
+                    }
+                } catch (Exception e) {
+                    System.out.printf(
+                        "The Name Server Address[%s] illegal, please set it as follows, \"127.0.0.1:9876;192.168.0.1:9876\"%n",
+                        namesrvAddr);
+                    System.exit(-3);
+                }
+            }
+
+            switch (messageStoreConfig.getBrokerRole()) {
+                case ASYNC_MASTER:
+                case SYNC_MASTER:
+                    brokerConfig.setBrokerId(MixAll.MASTER_ID);
+                    break;
+                case SLAVE:
+                    if (brokerConfig.getBrokerId() <= 0) {
+                        System.out.printf("Slave's brokerId must be > 0");
+                        System.exit(-3);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
     }
 
     private static void properties2SystemEnv(Properties properties) {
